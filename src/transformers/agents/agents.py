@@ -664,10 +664,11 @@ class ReactAgent(Agent):
         if final_answer is None and iteration == self.max_iterations:
             error_message = "Reached max iterations."
             self.logs.append({"error": AgentMaxIterationsError(error_message)})
+            yield self.logs[-1]
             self.logger.error(error_message, exc_info=1)
             final_answer = self.provide_final_answer(task)
 
-        return final_answer
+        yield final_answer
 
 
     def direct_run(self, task: str, **kwargs):
